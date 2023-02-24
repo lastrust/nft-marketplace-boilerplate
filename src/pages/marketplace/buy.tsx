@@ -3,39 +3,32 @@ import { NextSeo } from 'next-seo';
 import { breakPoints } from '@/lib/hooks/use-breakpoint';
 import Button from '@/components/ui/button/button';
 import Card from '@/components/ui/card';
-import { NextPageWithLayout, NFTDataType } from '@/types';
-import demoData from '../../data/demo.json';
+import { NextPageWithLayout } from '@/types';
 import useLoading from '@/lib/hooks/use-loading';
 import FullPageLoading from '@/components/ui/loading/full-page-loading';
 import MarketPlaceLayout from '@/layouts/maketplace/layout';
 import { useMarketplceContract } from '@/lib/hooks/use-marketplace-contract';
 import { WalletContext } from '@/lib/hooks/use-connect';
-import { ethers } from 'ethers';
+import { LISTING_COUNT } from '@/lib/constants';
 
 const MarketPlaceBuy: NextPageWithLayout = () => {
   const [isLoading, showLoading, hideLoading] = useLoading();
   const { getProvider, address } = useContext(WalletContext);
   const provider = getProvider();
-  const {
-    myNfts,
-    saleItems,
-    getTokenListingFromMyNFTs,
-    getListings,
-    listings,
-  } = useMarketplceContract(provider, address);
+  const { getListings, listings } = useMarketplceContract(provider, address);
   const [numPerRow, setNumPerRow] = useState<number>(0);
   const loadMore = () => {
     showLoading();
-    getListings(itemNumber, 5).then();
-    hideLoading();
-    setItemNumber(itemNumber + 5);
+    getListings(itemNumber, LISTING_COUNT).then(() => {
+      hideLoading();
+    });
+    setItemNumber(itemNumber + LISTING_COUNT);
   };
 
   const [itemNumber, setItemNumber] = useState<number>(0);
 
   useEffect(() => {
-    getListings(itemNumber, 5).then();
-    setItemNumber(itemNumber + 5);
+    loadMore();
 
     const handleWindowResize = () => {
       const width = window.innerWidth;
@@ -69,14 +62,13 @@ const MarketPlaceBuy: NextPageWithLayout = () => {
         title="Bunzz - Marketplace"
         description="Bunzz Marketplace Buy"
       />
-      <div className={`my-10 grid custom-grid-cols-${numPerRow} gap-4 py-10`}>
+      <div
+        className={`my-10 grid custom-grid-cols-${numPerRow} gap-4 py-10 px-10`}
+      >
         {listings?.map((item) => {
           return (
             <React.Fragment key={`${item.tokenId}`}>
-              <Card
-                tokenId={item.tokenId.toString()}
-                price={ethers.utils.formatUnits(item.price, 18)}
-              />
+              <Card tokenId={item.tokenId.toString()} price={item.price} />
             </React.Fragment>
           );
         })}

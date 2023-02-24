@@ -4,3 +4,5 @@ export enum LAYOUT_OPTIONS {
   RETRO = 'Retro',
   CLASSIC = 'Classic',
 }
+
+export const LISTING_COUNT = 5;

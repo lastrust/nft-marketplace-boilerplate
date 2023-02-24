@@ -3,10 +3,12 @@ import { useModal } from '../modal-views/context';
 import Button from '../ui/button/button';
 import InputLabel from '../ui/input-label';
 import Input from '../ui/forms/input';
-import { FC, useContext, useState } from 'react';
-import { NFTDataType } from '@/types';
+import React, { FC, useContext, useState } from 'react';
 import { WalletContext } from '@/lib/hooks/use-connect';
 import { useMarketplceContract } from '@/lib/hooks/use-marketplace-contract';
+import useLoading from '@/lib/hooks/use-loading';
+import FullPageLoading from '@/components/ui/loading/full-page-loading';
+import { useRouter } from 'next/router';
 
 type NFT_STATUS = 'ON_SALE' | 'READY_FOR_SALE';
 interface ChangePriceViewProps {
@@ -15,8 +17,13 @@ interface ChangePriceViewProps {
 
 const ChangePriceView: FC<ChangePriceViewProps> = ({ nftStatus }) => {
   const { closeModal, data } = useModal();
+  const [isLoading, showLoading, hideLoading] = useLoading();
+  const router = useRouter();
   const tokenId = data.tokenId;
-  const [price, setPrice] = useState<number>(data?.price ? data.price : 0);
+
+  const [price, setPrice] = useState<number>(
+    data?.generalPrice ? data.generalPrice : 0
+  );
   console.log(tokenId, price);
   let headerTxt = 'Change the price';
   let btnTxt = 'Change';
@@ -29,19 +36,21 @@ const ChangePriceView: FC<ChangePriceViewProps> = ({ nftStatus }) => {
       break;
   }
   const updatePrice = async () => {
+    showLoading();
     if (nftStatus == 'READY_FOR_SALE') {
       await list(tokenId, price);
     } else {
       await changePrice(tokenId, price);
     }
-    data.price = price;
+    hideLoading();
+    data.generalPrice = price;
     closeModal();
+    router.reload();
   };
 
   const { getProvider, address } = useContext(WalletContext);
   const provider = getProvider();
-  const { marketplaceContract, MARKETPLACE_ADDRESS, list, changePrice } =
-    useMarketplceContract(provider, address);
+  const { list, changePrice } = useMarketplceContract(provider, address);
 
   return (
     <>
@@ -78,6 +87,7 @@ const ChangePriceView: FC<ChangePriceViewProps> = ({ nftStatus }) => {
           {btnTxt}
         </Button>
       </div>
+      {isLoading && <FullPageLoading />}
     </>
   );
 };

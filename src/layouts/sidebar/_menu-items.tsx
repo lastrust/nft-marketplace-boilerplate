@@ -7,4 +7,24 @@ export const menuItems = [
     icon: <PlusCircle />,
     href: routes.marketplace,
   },
+  {
+    name: 'ABOUT',
+    icon: <PlusCircle />,
+    href: routes.marketplace,
+  },
+  {
+    name: 'ROADMAP',
+    icon: <PlusCircle />,
+    href: routes.marketplace,
+  },
+  {
+    name: 'TEAM',
+    icon: <PlusCircle />,
+    href: routes.team,
+  },
+  {
+    name: 'FAQ',
+    icon: <PlusCircle />,
+    href: routes.faq,
+  },
 ];
