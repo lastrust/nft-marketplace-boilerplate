@@ -270,3 +270,8 @@ custom grid column
 .custom-grid-cols-6 {
   grid-template-columns: repeat(6, minmax(0, 1fr));
 }
+
+/*footer {*/
+/*  position: fixed;*/
+/*  bottom: 0px;*/
+/*}*/
