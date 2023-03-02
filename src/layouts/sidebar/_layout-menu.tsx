@@ -7,7 +7,6 @@ import { Scrollbar } from '@/components/ui/scrollbar';
 import { Close } from '@/components/icons/close';
 import { useDrawer } from '@/components/drawer-views/context';
 import { MenuItem } from '@/components/ui/collapsible-menu';
-import WalletConnect from '@/components/nft/wallet-connect';
 import { menuItems } from '@/layouts/sidebar/_menu-items';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 

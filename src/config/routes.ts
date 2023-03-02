@@ -5,6 +5,7 @@ const routes = {
   buy: '/marketplace/buy/',
   team: '/team/',
   faq: '/faq/',
+  roadmap: '/roadmap/',
 };
 
 export default routes;

@@ -33,7 +33,7 @@ const CustomApp: FC<AppProps> = ({
           name="viewport"
           content="width=device-width, initial-scale=1 maximum-scale=1"
         />
-        <title>Bunzz - ICO & Staking boilerplate</title>
+        <title>Bunzz - NFT marketplace boilerplate</title>
         <link
           href="https://fonts.googleapis.com/css?family=Manrope"
           rel="stylesheet"

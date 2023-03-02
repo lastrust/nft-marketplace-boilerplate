@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { NextSeo } from 'next-seo';
 import Card from '@/components/ui/card';
 import { NextPageWithLayout } from '@/types';
@@ -10,8 +10,8 @@ import { EvmNft } from '@moralisweb3/common-evm-utils';
 import { BigNumber } from 'ethers';
 
 const MarketPlaceSell: NextPageWithLayout = () => {
-  const [floorPrice] = useState<number>(20);
-  const [totalTrade] = useState<number>(210022);
+  // const [floorPrice] = useState<number>(20);
+  // const [totalTrade] = useState<number>(210022);
 
   const { getProvider, address } = useContext(WalletContext);
   const provider = getProvider();

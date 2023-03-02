@@ -1,6 +1,6 @@
 {
-  "name": "ICOStakingOfBunzz",
-  "version": "1.5.5",
+  "name": "NFTMarketplaceOfBunzz",
+  "version": "0.1.0",
   "private": true,
   "scripts": {
     "clean": "rimraf \"{node_modules,.next,out.cache}\"",
@@ -53,6 +53,7 @@
     "recharts": "2.1.12",
     "swiper": "^8.4.2",
     "tiny-invariant": "^1.2.0",
+    "use-media-size": "^1.0.5",
     "uuid": "^9.0.0",
     "web3modal": "^1.9.9",
     "yup": "^0.32.11"

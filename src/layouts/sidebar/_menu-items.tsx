@@ -8,14 +8,9 @@ export const menuItems = [
     href: routes.marketplace,
   },
   {
-    name: 'ABOUT',
-    icon: <PlusCircle />,
-    href: routes.marketplace,
-  },
-  {
     name: 'ROADMAP',
     icon: <PlusCircle />,
-    href: routes.marketplace,
+    href: routes.roadmap,
   },
   {
     name: 'TEAM',
