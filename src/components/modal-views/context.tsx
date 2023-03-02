@@ -29,7 +29,6 @@ export function useModal() {
     setState({ ...state, isOpen: true, view, data });
   const closeModal = () => {
     setState({ ...state, isOpen: false });
-    console.log(state);
   };
 
   return {

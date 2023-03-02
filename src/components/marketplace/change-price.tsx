@@ -24,7 +24,6 @@ const ChangePriceView: FC<ChangePriceViewProps> = ({ nftStatus }) => {
   const [price, setPrice] = useState<number>(
     data?.generalPrice ? data.generalPrice : 0
   );
-  console.log(tokenId, price);
   let headerTxt = 'Change the price';
   let btnTxt = 'Change';
   switch (nftStatus) {
