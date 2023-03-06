@@ -3,11 +3,11 @@
 This boilerplate is for NFT marketplace.
 Using this boilerplate, you can create NFT marketplace website.
 
-![img.png](img.png)
+![img_20.png](imgs/img_20.png)
 
-![img_1.png](img_1.png)
+![img_21.png](imgs/img_21.png)
 
-![img_2.png](img_2.png)
+![img_22.png](imgs/img_22.png)
 
 # How to create this application?
 
@@ -23,7 +23,7 @@ Please deploy ERC721 token contract
 
 - Input DApp name
 
-![img_3.png](img_3.png)
+![img_23.png](imgs/img_23.png)
 
 - Select the chain you want to deploy the contracts on.
 
@@ -33,19 +33,19 @@ Please deploy ERC721 token contract
 
 If you have already an ERC721 token, you can skip this.
 
-![img_4.png](img_4.png)
+![img_24.png](imgs/img_24.png)
 
 - Search and select [Marketplace(NFT-ETH)](https://app.bunzz.dev/module-templates/9011d43b-d345-4f66-8729-be5b660a86b5)
 
-![img_5.png](img_5.png)
+![img_25.png](imgs/img_25.png)
 
 - Input token name, symbol and baseTokenURI. (If you didn't select ERC721 module, you don't need to add the token name and symbol).
 
-![img_6.png](img_6.png)
+![img_26.png](imgs/img_26.png)
 
 - Clicking `Deploy` button, you can deploy the smart contracts using metamask wallet.
 
-![img_7.png](img_7.png)
+![img_27.png](imgs/img_27.png)
 
 ## Create NFT marketplace
 
@@ -109,7 +109,7 @@ yarn build
 yarn start
 ```
 
-![img.png](img.png)
+![img_20.png](imgs/img_20.png)
 
 Now you can use this application.
 
