@@ -5,6 +5,21 @@ export const menuItems = [
   {
     name: 'MARKETPLACE',
     icon: <PlusCircle />,
-    href: routes.marketplace,
+    href: routes.buy,
+  },
+  {
+    name: 'ROADMAP',
+    icon: <PlusCircle />,
+    href: routes.roadmap,
+  },
+  {
+    name: 'TEAM',
+    icon: <PlusCircle />,
+    href: routes.team,
+  },
+  {
+    name: 'FAQ',
+    icon: <PlusCircle />,
+    href: routes.faq,
   },
 ];

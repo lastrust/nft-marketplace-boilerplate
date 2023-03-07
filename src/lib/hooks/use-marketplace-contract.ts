@@ -1,15 +1,14 @@
-import { useEffect, useState } from 'react';
-import { Contract, BigNumber as BN } from 'ethers';
+import { useState } from 'react';
+import { BigNumber as BN, Contract } from 'ethers';
 import { Web3Provider } from '@ethersproject/providers';
-import ICO_ABI from '../../assets/abis/ico.json';
 import { toast } from 'react-toastify';
 import { MARKETPLACE_ABI } from '@/lib/constants/abis/marketplace';
 import { MARKETPLACE_ADDRESS, OneToken } from '@/lib/constants/web3_contants';
 import { useERC721Contract } from '@/lib/hooks/use-erc721-contract';
 import { EvmNft } from 'moralis/common-evm-utils';
-import { ListingDataType, NFTDataType } from '@/types';
-import { useMap } from 'react-use';
+import { ListingDataType } from '@/types';
 import { useMoralisApi } from '@/lib/hooks/use-moralis-api';
+import { LISTING_COUNT } from '@/lib/constants';
 
 export const useMarketplceContract = (
   provider: Web3Provider | undefined,
@@ -23,7 +22,10 @@ export const useMarketplceContract = (
     )
   );
   const { isApproved, approveToken } = useERC721Contract(provider, address);
-  const { myNfts, nfts, getTokenData } = useMoralisApi(address);
+  const { myNfts, nfts } = useMoralisApi(address);
+  const [saleItems, setSaleItems] = useState<Array<ListingDataType>>([]);
+  const [unListedNFTs, setUnlistedNFTs] = useState<Array<EvmNft>>([]);
+  const [listings, setListings] = useState<Array<ListingDataType>>([]);
   const getTokenListing = async (tokenId: number | string) => {
     try {
       const listingId = await marketplaceContract.tokensListing(tokenId);
@@ -35,15 +37,21 @@ export const useMarketplceContract = (
 
   const getListing = async (listingId: number | string | BN) => {
     try {
-      const listing = await marketplaceContract.listings(listingId);
-      console.log('listing', listing);
-      return listing;
+      return await marketplaceContract.listings(listingId);
     } catch (error) {
       return null;
     }
   };
 
-  const [saleItems, setSaleItems] = useState<Array<ListingDataType>>([]);
+  const getUnListedNFTs = (_saleItems: Array<ListingDataType>) => {
+    const _unListedNFTs = myNfts.filter((item: EvmNft) => {
+      const _items = _saleItems.filter(
+        (_item) => item.tokenId.toString() == _item.tokenId.toString()
+      );
+      return _items.length == 0;
+    });
+    setUnlistedNFTs(_unListedNFTs);
+  };
 
   const getListingFromTokenId = async (tokenId: number | string) => {
     const listingId = await marketplaceContract.tokensListing(tokenId);
@@ -52,32 +60,42 @@ export const useMarketplceContract = (
   };
 
   const getTokenListingFromMyNFTs = async () => {
-    if (saleItems.length == 0) return;
+    if (saleItems.length > 0) return;
     const _saleItems: Array<ListingDataType> = [];
     for (let i = 0; i < myNfts?.length; i++) {
       const listing = await getListingFromTokenId(myNfts[i].tokenId);
-      if (listing.exist) {
+      if (listing?.exist) {
         _saleItems.push(listing);
       }
     }
     setSaleItems(_saleItems);
+    getUnListedNFTs(_saleItems);
   };
 
-  if (myNfts) {
+  if (myNfts?.length > 0) {
     getTokenListingFromMyNFTs().then();
   }
-
-  const [listings, setListings] = useState<Array<ListingDataType>>([]);
 
   const getListings = async (from: number, num: number) => {
     const _listings: Array<ListingDataType> = [];
     for (let i = from; i < from + num; i++) {
       const listing = await getListing(i);
-      if (listing.exist) {
+      if (listing?.exist && !listing?.isSold) {
         _listings.push(listing);
       }
     }
     setListings([...listings, ..._listings]);
+  };
+
+  const resetListings = async (from: number, num: number) => {
+    const _listings: Array<ListingDataType> = [];
+    for (let i = from; i < from + num; i++) {
+      const listing = await getListing(i);
+      if (listing?.exist && !listing?.isSold) {
+        _listings.push(listing);
+      }
+    }
+    setListings([..._listings]);
   };
 
   const getPrice = async (tokenId: number | string) => {
@@ -95,7 +113,7 @@ export const useMarketplceContract = (
     try {
       const tx = await marketplaceContract.changePrice(
         tokenId,
-        OneToken.mul(amount * 1000000).div(1000000)
+        OneToken.mul(amount * 100000000).div(100000000)
       );
       console.log(tx);
       const result = await tx.wait();
@@ -127,20 +145,33 @@ export const useMarketplceContract = (
     }
   };
 
-  const buy = async (tokenId: number | string) => {
-    if (!(await isApproved(MARKETPLACE_ADDRESS, tokenId))) return;
+  const removeList = async (tokenId: number | string) => {
     try {
-      const tx = await marketplaceContract.buy(
-        tokenId,
-        OneToken.mul(amount * 1000000).div(1000000)
-      );
+      const tx = await marketplaceContract.cancelListing(tokenId);
       console.log(tx);
       const result = await tx.wait();
       console.log(result);
-      toast('List successful!');
+      toast('Remove list successful!');
     } catch (error) {
       console.log(error);
-      toast.error('List failed.');
+      toast.error('Remove list failed.');
+    }
+  };
+
+  const buy = async (tokenId: number | string, price: BN) => {
+    if (!(await isApproved(MARKETPLACE_ADDRESS, tokenId))) return;
+    try {
+      const tx = await marketplaceContract.buy(tokenId, {
+        value: price,
+      });
+      console.log(tx);
+      const result = await tx.wait();
+      console.log(result);
+      toast('Buy successful!');
+      await resetListings(0, LISTING_COUNT);
+    } catch (error) {
+      console.log(error);
+      toast.error('Buy failed.');
     }
   };
 
@@ -150,13 +181,17 @@ export const useMarketplceContract = (
     myNfts,
     nfts,
     listings,
+    saleItems,
+    unListedNFTs,
     list,
     changePrice,
+    buy,
     getTokenListing,
     getTokenListingFromMyNFTs,
     getListingFromTokenId,
-    saleItems,
     getListings,
     getPrice,
+    resetListings,
+    removeList,
   };
 };

@@ -1,5 +1,5 @@
-import { CHAIN_ID, ERC721TOKEN_ADDRESS } from '@/lib/constants/web3_contants';
-import React, { useEffect, useState } from 'react';
+import { ERC721TOKEN_ADDRESS } from '@/lib/constants/web3_contants';
+import { useState } from 'react';
 import { Web3Provider } from '@ethersproject/providers';
 import { Contract } from 'ethers';
 import { ERC721_ABI } from '@/lib/constants/abis/erc721';
@@ -24,6 +24,7 @@ export const useERC721Contract = (
     }
   };
   const approveToken = async (spenderAddress: string, tokenId: number) => {
+    if (!address) return;
     try {
       const tx = await erc721Contract.approve(spenderAddress, tokenId);
       console.log(tx);

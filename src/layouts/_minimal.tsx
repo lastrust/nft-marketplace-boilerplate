@@ -77,7 +77,7 @@ export const Header = () => {
 export const MinimalLayout: FC<Props> = ({ children }) => (
   <>
     <Header />
-    <div className="dark:bg-dark-100 flex min-h-screen flex-col gap-6 bg-gray-100 py-5 px-4 sm:px-6 lg:px-8 3xl:px-10">
+    <div className="dark:bg-dark-100 flex min-h-[70vh] flex-col gap-6 py-5">
       <main className="mb-12 flex w-full flex-grow flex-col">{children}</main>
     </div>
     <Footer />

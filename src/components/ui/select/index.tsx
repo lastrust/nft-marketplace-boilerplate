@@ -71,7 +71,7 @@ const Select: FC<SelectProps> = ({
                   );
                 })}
               </div>
-            )
+            );
           })}
         </div>
       );
@@ -94,7 +94,6 @@ const Select: FC<SelectProps> = ({
         </div>
       );
     }
-    
   };
 
   const selectOption = (idx: number) => {

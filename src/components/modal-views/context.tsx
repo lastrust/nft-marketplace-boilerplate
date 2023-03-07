@@ -27,7 +27,9 @@ export function useModal() {
   const [state, setState] = useAtom(modalAtom);
   const openModal = (view: MODAL_VIEW, data?: any) =>
     setState({ ...state, isOpen: true, view, data });
-  const closeModal = () => setState({ ...state, isOpen: false });
+  const closeModal = () => {
+    setState({ ...state, isOpen: false });
+  };
 
   return {
     ...state,

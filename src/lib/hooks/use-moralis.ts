@@ -1,9 +1,5 @@
 import Moralis from 'moralis';
 
-enum MoralisAPIType {
-  GETNFTs = 'getNFTs',
-}
-
 interface MoralisAPIPayload {
   chain: string;
   address: string;

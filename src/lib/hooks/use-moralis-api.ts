@@ -1,11 +1,11 @@
 import { CHAIN_ID, ERC721TOKEN_ADDRESS } from '@/lib/constants/web3_contants';
 import { useEvmWalletNFTs, useEvmContractNFTs } from '@moralisweb3/next';
-import { EvmNft } from "@moralisweb3/common-evm-utils";
+import { EvmNft } from '@moralisweb3/common-evm-utils';
 
 export const useMoralisApi = (address: string) => {
   const myNFTOptions = {
     chain: CHAIN_ID,
-    tokenAddreses: [ERC721TOKEN_ADDRESS],
+    tokenAddresses: [ERC721TOKEN_ADDRESS],
     address: address,
   };
   let data: any;

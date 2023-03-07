@@ -4,16 +4,14 @@ import ShareIcon from '@/components/icons/share';
 import ThreeDotsIcon from '@/components/icons/threedots';
 import Button from '@/components/ui/button/button';
 import MinimalLayout from '@/layouts/_minimal';
-import { NFTDataType, NextPageWithLayout, AttributeType } from '@/types';
-import { GetStaticPaths, GetStaticProps } from 'next';
+import { NextPageWithLayout, AttributeType } from '@/types';
 import { NextSeo } from 'next-seo';
-import { ParsedUrlQuery } from 'querystring';
-import { useContext, useState } from "react";
+import { useContext, useState } from 'react';
 import { useMoralisApi } from '@/lib/hooks/use-moralis-api';
 import { useRouter } from 'next/router';
-import ErrorPage from "@/pages/404";
-import { WalletContext } from "@/lib/hooks/use-connect";
-import { useMarketplceContract } from "@/lib/hooks/use-marketplace-contract";
+import ErrorPage from '@/pages/404';
+import { WalletContext } from '@/lib/hooks/use-connect';
+import { useMarketplceContract } from '@/lib/hooks/use-marketplace-contract';
 
 const NFTDetailPage: NextPageWithLayout = () => {
   const router = useRouter();
@@ -32,7 +30,10 @@ const NFTDetailPage: NextPageWithLayout = () => {
   }
   return (
     <>
-      <NextSeo title={data.name} description="Bunzz - Staking Boilerplate" />
+      <NextSeo
+        title={data.name}
+        description="Bunzz - NFT marketplace boilerplate"
+      />
       <div className="flex w-full flex-col gap-y-5 gap-x-10 px-5 xs:flex-row xs:gap-y-0 2xl:px-56">
         <div className="flex w-full flex-col gap-y-4">
           <div className="flex w-full gap-x-5">
@@ -40,6 +41,7 @@ const NFTDetailPage: NextPageWithLayout = () => {
               <img
                 src={data.metadata.image}
                 className="rounded-xl bg-white p-5"
+                alt={''}
               />
             </div>
             <div className="flex flex-col gap-y-3">
@@ -58,7 +60,9 @@ const NFTDetailPage: NextPageWithLayout = () => {
             </div>
           </div>
           <div className="flex items-center gap-x-2">
-            <h3 className="">{data.name} # {data.tokenId}</h3>
+            <h3 className="">
+              {data.name} # {data.tokenId}
+            </h3>
             <sub className="text-gray-400">Owned by</sub>
             <sub>{data.ownerOf}</sub>
           </div>
@@ -80,15 +84,16 @@ const NFTDetailPage: NextPageWithLayout = () => {
         <div className="flex w-full flex-col gap-y-5">
           <div className="flex w-full flex-col gap-y-3 rounded-xl bg-white p-5">
             <h2>Description</h2>
-            <p>
-              {data.metadata.description}
-            </p>
+            <p>{data.metadata.description}</p>
           </div>
           <div className="flex w-full flex-col gap-y-3 rounded-xl bg-white p-5">
             <h2>Properties</h2>
             {data.metadata.attributes.map((item: AttributeType) => {
               return (
-                <div className="flex w-full items-center">
+                <div
+                  className="flex w-full items-center"
+                  key={item.trait_type + '_' + item.value}
+                >
                   <span className="w-1/3">{item.trait_type}</span>
                   <span className="w-1/3">{item.value}</span>
                 </div>

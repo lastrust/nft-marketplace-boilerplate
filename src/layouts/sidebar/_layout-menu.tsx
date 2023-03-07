@@ -7,7 +7,6 @@ import { Scrollbar } from '@/components/ui/scrollbar';
 import { Close } from '@/components/icons/close';
 import { useDrawer } from '@/components/drawer-views/context';
 import { MenuItem } from '@/components/ui/collapsible-menu';
-import WalletConnect from '@/components/nft/wallet-connect';
 import { menuItems } from '@/layouts/sidebar/_menu-items';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 
@@ -29,8 +28,8 @@ export const MenuItems = () => {
                 },
               }),
             }}
-            className="mx-3 text-[13px] font-medium uppercase text-gray-600 transition first:ml-0 last:mr-0 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white 2xl:mx-3 2xl:text-sm 3xl:mx-4"
-            activeClassName="!text-gray-900 dark:!text-white"
+            className="mx-3 text-[18px] font-medium uppercase text-gray-600 transition first:ml-0 last:mr-0 hover:text-gray-900 dark:text-gray-300 dark:hover:text-white"
+            activeClassName="text-black font-bold"
           >
             {item.name}
           </ActiveLink>
