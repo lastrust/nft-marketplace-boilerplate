@@ -5,7 +5,7 @@ export const menuItems = [
   {
     name: 'MARKETPLACE',
     icon: <PlusCircle />,
-    href: routes.marketplace,
+    href: routes.buy,
   },
   {
     name: 'ROADMAP',

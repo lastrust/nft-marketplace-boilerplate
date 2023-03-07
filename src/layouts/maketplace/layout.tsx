@@ -17,25 +17,28 @@ const MarketPlaceLayout: FC<Props> = ({ children }) => {
     { id: 2, name: 'Low to High', value: 'Low to High', group: 'rarity' },
     { id: 3, name: 'High to Low', value: 'High to Low', group: 'rarity' },
   ];
+  const selectedTabClass =
+    'border-b-2 font-semibold text-[#182F43] border-[#1D253B]';
+  const unSelectedTabClass = 'border-none';
   return (
     <>
       <MinimalLayout>
         <div className="relative">
           <div className="flex flex-row border-b-2 border-gray-300 px-10">
             <span
-              className={`border-b-2 border-gray-400 px-5 py-2  text-gray-600 ${
+              className={`mb-[-2px] border-b-2 px-5 py-2  text-gray-600 ${
                 router.pathname.includes('buy')
-                  ? 'border-b-2 font-semibold'
-                  : 'border-none'
+                  ? selectedTabClass
+                  : unSelectedTabClass
               }`}
             >
               <Link href={'/marketplace/buy'}>BUY</Link>
             </span>
             <span
-              className={`border-gray-400 px-5 py-2 text-gray-600 ${
+              className={`mb-[-2px] px-5 py-2 text-gray-600 ${
                 router.pathname.includes('sell')
-                  ? 'border-b-2 font-semibold'
-                  : 'border-none'
+                  ? selectedTabClass
+                  : unSelectedTabClass
               }`}
             >
               <Link href={'/marketplace/sell'}>SELL</Link>
