@@ -20,7 +20,7 @@ const MarketPlaceLayout: FC<Props> = ({ children }) => {
     <>
       <MinimalLayout>
         <div className="relative">
-          <div className="flex flex-row border-b-2 border-gray-300">
+          <div className="flex flex-row border-b-2 border-gray-300 px-10">
             <span
               className={`border-b-2 border-gray-400 px-5 py-2  text-gray-600 ${
                 router.pathname.includes('buy')
