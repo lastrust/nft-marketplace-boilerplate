@@ -23,6 +23,9 @@ export const useMarketplceContract = (
   );
   const { isApproved, approveToken } = useERC721Contract(provider, address);
   const { myNfts, nfts } = useMoralisApi(address);
+  const [saleItems, setSaleItems] = useState<Array<ListingDataType>>([]);
+  const [unListedNFTs, setUnlistedNFTs] = useState<Array<EvmNft>>([]);
+  const [listings, setListings] = useState<Array<ListingDataType>>([]);
   const getTokenListing = async (tokenId: number | string) => {
     try {
       const listingId = await marketplaceContract.tokensListing(tokenId);
@@ -40,7 +43,15 @@ export const useMarketplceContract = (
     }
   };
 
-  const [saleItems, setSaleItems] = useState<Array<ListingDataType>>([]);
+  const getUnListedNFTs = (_saleItems: Array<ListingDataType>) => {
+    const _unListedNFTs = myNfts.filter((item: EvmNft) => {
+      const _items = _saleItems.filter(
+        (_item) => item.tokenId.toString() == _item.tokenId.toString()
+      );
+      return _items.length == 0;
+    });
+    setUnlistedNFTs(_unListedNFTs);
+  };
 
   const getListingFromTokenId = async (tokenId: number | string) => {
     const listingId = await marketplaceContract.tokensListing(tokenId);
@@ -61,23 +72,9 @@ export const useMarketplceContract = (
     getUnListedNFTs(_saleItems);
   };
 
-  if (myNfts) {
+  if (myNfts?.length > 0) {
     getTokenListingFromMyNFTs().then();
   }
-
-  const [unListedNFTs, setUnlistedNFTs] = useState<Array<EvmNft>>([]);
-
-  const getUnListedNFTs = (_saleItems: Array<ListingDataType>) => {
-    const _unListedNFTs = myNfts.filter((item: EvmNft) => {
-      const _items = _saleItems.filter(
-        (_item) => item.tokenId.toString() == _item.tokenId.toString()
-      );
-      return _items.length == 0;
-    });
-    setUnlistedNFTs(_unListedNFTs);
-  };
-
-  const [listings, setListings] = useState<Array<ListingDataType>>([]);
 
   const getListings = async (from: number, num: number) => {
     const _listings: Array<ListingDataType> = [];

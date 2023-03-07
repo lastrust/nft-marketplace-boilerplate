@@ -34,7 +34,7 @@ const Card: FC<CardProps> = ({
   const nftItem = getTokenData(tokenId.toString());
   if (!nftItem) return null;
 
-  const [generalPrice, setGeneralPrice] = useState<string>();
+  const [generalPrice, setGeneralPrice] = useState<string>('');
 
   useEffect(() => {
     setGeneralPrice(ethers.utils.formatUnits(price, 18));
