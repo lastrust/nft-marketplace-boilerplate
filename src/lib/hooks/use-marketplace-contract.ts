@@ -64,7 +64,7 @@ export const useMarketplceContract = (
     const _saleItems: Array<ListingDataType> = [];
     for (let i = 0; i < myNfts?.length; i++) {
       const listing = await getListingFromTokenId(myNfts[i].tokenId);
-      if (listing.exist) {
+      if (listing?.exist) {
         _saleItems.push(listing);
       }
     }
