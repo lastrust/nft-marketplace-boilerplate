@@ -3,6 +3,7 @@ import MinimalLayout from '@/layouts/_minimal';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import Select from '@/components/ui/select';
+import demoData from '../../data/demo.json';
 
 interface Props {
   children: React.ReactNode;
@@ -40,21 +41,21 @@ const MarketPlaceLayout: FC<Props> = ({ children }) => {
               <Link href={'/marketplace/sell'}>SELL</Link>
             </span>
           </div>
-          {/*<div className="absolute right-10 top-0 flex items-center gap-x-5 text-sm">*/}
-          {/*  <Select*/}
-          {/*    selectType="GROUP_SELECT"*/}
-          {/*    cn="min-w-[200px] px-3 py-2 bg-white rounded-md"*/}
-          {/*    optionBoardCn="py-2 bg-white rounded-md"*/}
-          {/*    options={sortOptions}*/}
-          {/*    optionCn="hover:bg-gray-200"*/}
-          {/*    groupCn="text-gray-400"*/}
-          {/*    placeholder="Sort by"*/}
-          {/*    onSelect={(val) => {*/}
-          {/*      console.log(val);*/}
-          {/*    }}*/}
-          {/*  />*/}
-          {/*  <span>{Number(demoData.totalNFTs).toLocaleString()} items</span>*/}
-          {/*</div>*/}
+          <div className="absolute right-10 top-0 flex items-center gap-x-5 text-sm">
+            <Select
+              selectType="GROUP_SELECT"
+              cn="min-w-[200px] px-3 py-2 bg-white rounded-md"
+              optionBoardCn="py-2 bg-white rounded-md"
+              options={sortOptions}
+              optionCn="hover:bg-gray-200"
+              groupCn="text-gray-400"
+              placeholder="Sort by"
+              onSelect={(val) => {
+                console.log(val);
+              }}
+            />
+            <span>{Number(demoData.totalNFTs).toLocaleString()} items</span>
+          </div>
         </div>
         {children}
       </MinimalLayout>

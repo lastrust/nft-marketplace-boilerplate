@@ -1,7 +1,7 @@
 import { useRouter } from 'next/router';
 import Image from '@/components/ui/image';
 import AnchorLink from '@/components/ui/links/anchor-link';
-import lightLogo from '@/assets/images/bunzz/Vector.png';
+import lightLogo from '@/assets/images/bunzz/logo55.svg';
 import routes from '@/config/routes';
 import { LAYOUT_OPTIONS } from '@/lib/constants';
 
